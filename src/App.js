@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import Header from './layout/Header';
+import SideNav from './layout/SideNav';
+class App extends Component {
+  state = {
+    appName: 'Amac',
+    name: '',
+  };
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  onClickHandler = () => {
+    this.setState ({appName: this.state.name});
+  };
+  onNameChangeHandler = event => {
+    this.setState ({name: event.target.value});
+  };
+  changeNamefromHeader = text => {
+    this.setState ({appName: text});
+  };
+  render () {
+    return (
+      <React.Fragment>
+        <Header
+          appName={this.state.appName}
+          changeNamefromHeader={this.changeNamefromHeader}
+        />
+
+        <div className="row container">
+          <div className="col-2">
+            <SideNav changeNamefromHeader={this.changeNamefromHeader} />
+          </div>
+          <div className="col-10">
+            <input
+              type="text"
+              name=""
+              id=""
+              value={this.state.name}
+              onChange={this.onNameChangeHandler}
+            />
+            {this.state.name}
+            <button onClick={this.onClickHandler}>Change Name</button>
+          </div>
+        </div>
+
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
